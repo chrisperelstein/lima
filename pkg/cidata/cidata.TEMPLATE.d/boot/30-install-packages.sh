@@ -41,7 +41,9 @@ if command -v apt-get >/dev/null 2>&1; then
 elif command -v dnf >/dev/null 2>&1; then
 	if [ "${LIMA_CIDATA_MOUNTS}" -gt 0 ]; then
 		if ! command -v sshfs >/dev/null 2>&1; then
-			if grep -q "release 8" /etc/system-release; then
+			if grep -q "Oracle Linux Server release 8" /etc/system-release; then
+				dnf install --repo ol8_codeready_builder --repo ol8_baseos_latest -y fuse-sshfs
+			elif grep -q "release 8" /etc/system-release; then
 				dnf install --enablerepo powertools -y fuse-sshfs
 			else
 				dnf install -y fuse-sshfs
